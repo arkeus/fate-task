@@ -9,8 +9,10 @@ header, main, footer {
 
 header {
 	@include clearfix;
+	@include unselectable;
 	position: relative;
 	margin-bottom: 10px;
+	cursor: default;
 	
 	#brand {
 		font-family: "Telex", sans-serif;
@@ -64,14 +66,16 @@ main {
 
 footer {
 	@include clearfix;
+	@include unselectable;
 	margin-top: 10px;
 	
 	#copyright {
 		float: left;
 		color: #ccc;
 		font-weight: bold;
-		font-size: 16px;
+		font-size: 14px;
 		font-family: "Telex", sans-serif;
+		cursor: default;
 	}
 	
 	#footer-links {

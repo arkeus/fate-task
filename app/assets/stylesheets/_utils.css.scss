@@ -1,5 +1,4 @@
 // Micro Clearfix: http://nicolasgallagher.com/micro-clearfix-hack/
-
 @mixin clearfix {
 	&:before, &:after {
 		content: " ";
@@ -13,6 +12,21 @@
 	*zoom: 1;
 }
 
+// Helper class for clearfix
 .cf {
 	@include clearfix;
+}
+
+// Make an element unselectable
+@mixin unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+// Helper class for unselectable
+.unselectable {
+	@include unselectable;
 }
