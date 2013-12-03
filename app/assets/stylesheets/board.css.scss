@@ -1,23 +1,29 @@
-@import url(http://fonts.googleapis.com/css?family=Telex);
+@import url(http://fonts.googleapis.com/css?family=Telex|Droid+Sans);
 @import "utils";
 
 header, main, footer {
 	width: 890px;
 	margin: 0 auto;
-	font-family: "Verdana", "sans-serif";
+	font-family: "Droid Sans", "sans-serif";
+	font-size: 14px;
 }
 
 header {
 	@include clearfix;
 	@include unselectable;
 	position: relative;
-	margin-bottom: 10px;
+	margin-bottom: 16px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #eee;
 	cursor: default;
 	
 	#brand {
 		font-family: "Telex", sans-serif;
 		font-weight: bold;
 		font-size: 36px;
+		height: 42px;
+		line-height: 56px;
+		
 		float: left;
 		
 		em {
@@ -67,7 +73,9 @@ main {
 footer {
 	@include clearfix;
 	@include unselectable;
-	margin-top: 10px;
+	margin-top: 16px;
+	padding-top: 6px;
+	border-top: 1px solid #eee;
 	
 	#copyright {
 		float: left;
@@ -90,24 +98,32 @@ footer {
 	}
 }
 
-section#promotion {
+section#promotion, section#action {
 	.promotion-column {
-		padding: 0 30px;
-		
-		.title {
-			font-family: "Telex", sans-serif;
-			font-weight: bold;
-			font-size: 24px;
-		}
-		
-		.fa {
-			display: block;
-			font-size: 64px;
-		}
-		
-		.blurb {
-			width: 100%;
-			text-align: justify;
-		}
+		padding: 0 20px;
 	}
+		
+	.title {
+		font-family: "Telex", sans-serif;
+		font-weight: bold;
+		font-size: 24px;
+	}
+	
+	.fa {
+		display: block;
+		font-size: 64px;
+	}
+	
+	.blurb {
+		width: 100%;
+		text-align: justify;
+	}
+	
+	form {
+		margin-top: 8px;
+	}
+}
+
+section#action {
+	margin-top: 24px;
 }

@@ -5,24 +5,36 @@
 <section id="promotion" class="grid">
 	<div class="promotion-column col-4 align-center">
 		<span class="title">Online</span>
-		<%= fa_icon "cloud" %>
+		<%= fa_icon "cloud", class: "red-2" %>
 		<div class="blurb">Fate Task lives online, so you can access it from any computer, anywhere.</div>
 	</div>
 	<div class="promotion-column col-4 align-center">
 		<span class="title">Easy</span>
-		<%= fa_icon "check" %>
+		<%= fa_icon "check", class: "green-2" %>
 		<div class="blurb">Creating and managing tasks are as simple as possible.</div>
 	</div>
 	<div class="promotion-column col-4 align-center">
 		<span class="title">Quick</span>
-		<%= fa_icon "bolt" %>
+		<%= fa_icon "bolt", class: "blue-2" %>
 		<div class="blurb">It's probably not quick and doesn't sync but don't tell anyone, shhhhhh.</div>
 	</div>
 </section>
 
-<section id="new-board">
-	<%= form_tag(create_board_path, method: :post) do %>
-		<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
-		<%= submit_tag("Create") %>
-	<% end %>
+<section id="action" class="grid">
+	<div class="col-2">&nbsp;</div>
+	<div class="action-column col-4 align-center">
+		<span class="title">Load A Board</span>
+		<%= form_tag(load_board_path, method: :post) do %>
+			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
+			<%= submit_tag("Load") %>
+		<% end %>
+	</div>
+	<div class="action-column col-4 align-center">
+		<span class="title">Create A Board</span>
+		<%= form_tag(create_board_path, method: :post) do %>
+			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
+			<%= submit_tag("Create") %>
+		<% end %>
+	</div>
+	<div class="col-2">&nbsp;</div>
 </section>
