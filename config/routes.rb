@@ -1,6 +1,22 @@
 Task::Application.routes.draw do
-	root "board#index"
-	get "/:name" => "board#show", as: :board
+	root "boards#index"
+	
+	scope ":board" do
+		root "boards#show", as: :board
+		
+		scope "schedules" do
+			root "schedules#list", as: :schedules
+			post "/create" => "scheduless#create", as: :create_schedule
+		
+			scope "/:schedule_id" do
+				scope "/tasks" do
+					patch "/:task_id/complete" => "tasks#complete", as: :complete_task
+					patch "/:task_id/uncomplete" => "tasks#uncomplete", as: :uncomplete_task
+					post "/create" => "tasks#create", as: :create_task
+				end
+			end
+		end
+	end
 	
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
