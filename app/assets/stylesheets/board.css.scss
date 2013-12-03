@@ -82,11 +82,11 @@ footer {
 		float: right;
 		font-size: 20px;
 		
-		a:nth-child(1) { color: #ff009c; }
-		a:nth-child(2) { color: #ff6600; }
-		a:nth-child(3) { color: #9cff00; }
-		a:nth-child(4) { color: #00ff84; }
-		a:nth-child(5) { color: #007eff; }
+		a:nth-child(1) { color: $red-1; }
+		a:nth-child(2) { color: $red-3; }
+		a:nth-child(3) { color: $green-1; }
+		a:nth-child(4) { color: $green-3; }
+		a:nth-child(5) { color: $blue-1; }
 	}
 }
 
