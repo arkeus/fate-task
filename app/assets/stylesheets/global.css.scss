@@ -1,0 +1,17 @@
+.notice {
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	padding: 8px;
+	font-weight: bold;
+	margin-bottom: 12px;
+	
+	&.error {
+		border-color: red;
+		color: red;
+	}
+	
+	&.info {
+		border-color: green;
+		color: green;
+	}
+}

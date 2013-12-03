@@ -1,0 +1,4 @@
+<% [:info, :error].each do |level| %>
+	<% next if flash[level].blank? %>
+	<div class="notice <%= level %>"><%= flash[level] %></div>
+<% end %>
