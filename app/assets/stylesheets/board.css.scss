@@ -25,22 +25,22 @@ header {
 		}
 		
 		.subdomain {
-			em:nth-child(1) { color: #ff009c; }
-			em:nth-child(2) { color: #ff0030; }
-			em:nth-child(3) { color: #ff2400; }
-			em:nth-child(4) { color: #ff6600; }
+			em:nth-child(1) { color: $red-1; }
+			em:nth-child(2) { color: $red-2; }
+			em:nth-child(3) { color: $red-3; }
+			em:nth-child(4) { color: $red-4; }
 		}
 		
 		.domain {
-			em:nth-child(1) { color: #9cff00; }
-			em:nth-child(2) { color: #60ff00; }
-			em:nth-child(3) { color: #00ff0c; }
-			em:nth-child(4) { color: #00ff84; }
+			em:nth-child(1) { color: $green-1; }
+			em:nth-child(2) { color: $green-2; }
+			em:nth-child(3) { color: $green-3; }
+			em:nth-child(4) { color: $green-4; }
 		}
 		
 		.tld {
-			em:nth-child(1) { color: #00c0ff; }
-			em:nth-child(2) { color: #007eff; }
+			em:nth-child(1) { color: $blue-1; }
+			em:nth-child(2) { color: $blue-2; }
 		}
 		
 		.separator {
@@ -87,5 +87,27 @@ footer {
 		a:nth-child(3) { color: #9cff00; }
 		a:nth-child(4) { color: #00ff84; }
 		a:nth-child(5) { color: #007eff; }
+	}
+}
+
+section#promotion {
+	.promotion-column {
+		padding: 0 30px;
+		
+		.title {
+			font-family: "Telex", sans-serif;
+			font-weight: bold;
+			font-size: 24px;
+		}
+		
+		.fa {
+			display: block;
+			font-size: 64px;
+		}
+		
+		.blurb {
+			width: 100%;
+			text-align: justify;
+		}
 	}
 }
