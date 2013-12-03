@@ -22,7 +22,7 @@ class BoardsController < ApplicationController
 		raise "A board with that name does not exists" unless Board.exists?(name: post_params[:name])
 		redirect_to board_path(board: post_params[:name])
 	rescue => e
-		flash[:error] = "Could not create board: #{e.message}"
+		flash[:error] = "Could not load board: #{e.message}"
 		redirect_to root_path and return
 	end
 	
