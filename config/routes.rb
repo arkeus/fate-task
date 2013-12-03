@@ -1,5 +1,6 @@
 Task::Application.routes.draw do
 	root "boards#index"
+	post "/create", to: "boards#create", as: :create_board
 	
 	scope ":board" do
 		root "boards#show", as: :board

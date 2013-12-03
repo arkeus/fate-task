@@ -2,4 +2,9 @@
 
 <%= render partial: "notice" %>
 
-index
+<section id="new-board">
+	<%= form_tag(create_board_path, method: :post) do %>
+		<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
+		<%= submit_tag("Create") %>
+	<% end %>
+</section>

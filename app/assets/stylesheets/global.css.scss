@@ -1,3 +1,5 @@
+@import "utils";
+
 .notice {
 	border-top: 1px solid;
 	border-bottom: 1px solid;
@@ -14,4 +16,49 @@
 		border-color: green;
 		color: green;
 	}
+}
+
+// Form and nav elements
+
+body, input, textarea, button {
+	font-family: verdana, helvetica, sans-serif;
+	font-size: 11px;
+}
+
+a, input[type="submit"], button[type="submit"] {
+	text-decoration: none;
+	color: #3873ba;
+	&:visited { color: #b93838; }
+	&:hover { color: #baa938; }
+	&:active { color: #51ba38; }
+	&:focus { outline: none; }
+}
+
+input[type="text"], input[type="password"], textarea {
+	box-shadow: 0 0 4px #ddd;
+	padding: 4px 8px;
+	border-radius: 3px;
+	
+	border: {
+		top: 1px solid #ccc;
+		left: 1px solid #ccc;
+		right: 1px solid #eee;
+		bottom: 1px solid #eee;
+	}
+	
+	&:focus {
+		outline-color: rgba(0, 0, 255, 0.4);
+	}
+}
+
+input[type="submit"], button {
+	@include button;
+}
+
+a.button {
+		@include button;
+		
+		&.disabled {
+			color: #aaa;
+		}
 }

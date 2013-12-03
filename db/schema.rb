@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20131203063550) do
     t.datetime "updated_at"
   end
 
-  add_index "boards", ["name"], name: "index_boards_on_name"
+  add_index "boards", ["name"], name: "index_boards_on_name", unique: true
 
   create_table "schedule_tasks", force: true do |t|
     t.string   "name"
