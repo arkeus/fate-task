@@ -31,6 +31,13 @@
 	@include unselectable;
 }
 
+// Revert to border box sizing
+@mixin border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 // Buttons
 @mixin button {
 	display: inline-block;
@@ -53,3 +60,19 @@
 		padding: 5px 8px 3px 8px;
 	}
 }
+
+// Colors
+$red-1: #ff009c;
+$red-2: #ff0030;
+$red-3: #ff2400;
+$red-4: #ff6600;
+
+$green-1: #9cff00;
+$green-2: #60ff00;
+$green-3: #00ff0c;
+$green-4: #00ff84;
+
+$blue-1: #00c0ff;
+$blue-2: #007eff;
+$blue-3: #ff009c;
+$blue-4: #ff009c;
