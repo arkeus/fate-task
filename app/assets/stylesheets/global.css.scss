@@ -1,5 +1,15 @@
 @import "utils";
 
+// Helpers
+
+.float-left { float: left; }
+.float-right { float: right; }
+.align-left { text-align: left; }
+.align-right { text-align: right; }
+.align-center { text-align: center; }
+
+// Flash Notices
+
 .notice {
 	border-top: 1px solid;
 	border-bottom: 1px solid;
@@ -55,10 +65,14 @@ input[type="submit"], button {
 	@include button;
 }
 
-a.button {
+a {
+	text-decoration: none;
+	
+	&.button {
 		@include button;
 		
 		&.disabled {
 			color: #aaa;
 		}
+	}
 }

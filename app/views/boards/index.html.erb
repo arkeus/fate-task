@@ -2,6 +2,24 @@
 
 <%= render partial: "notice" %>
 
+<section id="promotion" class="grid">
+	<div class="promotion-column col-4 align-center">
+		Online
+		<%= fa_icon "cloud" %>
+		Fate Task lives online, so you can access it from any computer, anywhere.
+	</div>
+	<div class="promotion-column col-4 align-center">
+		Easy
+		<%= fa_icon "check" %>
+		Creating and managing tasks are as simple as possible.
+	</div>
+	<div class="promotion-column col-4 align-center">
+		Quick
+		<%= fa_icon "bolt" %>
+		It's probably not quick and doesn't sync but don't tell anyone, shhhhhh.
+	</div>
+</section>
+
 <section id="new-board">
 	<%= form_tag(create_board_path, method: :post) do %>
 		<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
