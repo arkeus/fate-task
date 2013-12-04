@@ -24,8 +24,7 @@ app.controller("BoardController", ["$scope", function($scope) {
 
 app.factory("Schedule", ["$rootScope", "$resource", function($rootScope, $resource) {
 	return $resource("/schedule/:action", {}, {
-		bags: { method: "GET", params: { action: "bags" }, isArray: true },
-		equipped: { method: "GET", params: { action: "equipped" }, isArray: true }
+		list: { method: "GET", params: { action: "list" }, isArray: true }
 	});
 }]);
 
