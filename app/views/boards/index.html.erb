@@ -2,35 +2,37 @@
 
 <%= render partial: "notice" %>
 
+<section id="pitch">
+	Fate Task is an easy to use online app allowing you to schedule and keep track of your day to day tasks.
+</section>
+
 <section id="promotion" class="grid">
 	<div class="promotion-column col-4 align-center">
-		<span class="title">Online</span>
-		<%= fa_icon "cloud", class: "red-2" %>
+		<div class="title"><%= fa_icon "cloud", class: "red-2" %><span>Online</span></div>
 		<div class="blurb">Fate Task lives online, so you can access it from any computer, anywhere.</div>
 	</div>
 	<div class="promotion-column col-4 align-center">
-		<span class="title">Easy</span>
-		<%= fa_icon "check", class: "green-2" %>
+		<div class="title"><%= fa_icon "check", class: "green-2" %><span>Easy</span></div>
 		<div class="blurb">Creating and managing tasks are as simple as possible.</div>
 	</div>
 	<div class="promotion-column col-4 align-center">
-		<span class="title">Quick</span>
-		<%= fa_icon "bolt", class: "blue-2" %>
+		<div class="title"><%= fa_icon "bolt", class: "blue-2" %> <span>Quick</span></div>
 		<div class="blurb">It's probably not quick and doesn't sync but don't tell anyone, shhhhhh.</div>
 	</div>
 </section>
 
 <section id="action" class="grid">
 	<div class="col-2">&nbsp;</div>
-	<div class="action-column col-4 align-center">
-		<span class="title">Load A Board</span>
+	<div class="action-column col-3 align-center">
+		<span class="title"><%= fa_icon "folder-open", class: "gray-1" %><span>Load A Board</span></span>
 		<%= form_tag(load_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Load") %>
 		<% end %>
 	</div>
-	<div class="action-column col-4 align-center">
-		<span class="title">Create A Board</span>
+	<div class="col-2">&nbsp;</div>
+	<div class="action-column col-3 align-center">
+		<span class="title"><%= fa_icon "plus", class: "gray-1" %><span>Create A Board</span></span>
 		<%= form_tag(create_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Create") %>
