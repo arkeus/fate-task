@@ -24,7 +24,7 @@
 <section id="action" class="grid">
 	<div class="col-2">&nbsp;</div>
 	<div class="action-column col-3 align-center">
-		<span class="title"><%= fa_icon "folder-open", class: "gray-1" %><span>Load A Board</span></span>
+		<div class="title"><%= fa_icon "folder-open", class: "gray-1" %><span>Load A Board</span></div>
 		<%= form_tag(load_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Load") %>
@@ -32,7 +32,7 @@
 	</div>
 	<div class="col-2">&nbsp;</div>
 	<div class="action-column col-3 align-center">
-		<span class="title"><%= fa_icon "plus", class: "gray-1" %><span>Create A Board</span></span>
+		<div class="title"><%= fa_icon "plus", class: "gray-1" %><span>Create A Board</span></div>
 		<%= form_tag(create_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Create") %>

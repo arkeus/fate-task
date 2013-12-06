@@ -95,18 +95,32 @@ footer {
 		a:nth-child(3) { color: $green-1; }
 		a:nth-child(4) { color: $green-3; }
 		a:nth-child(5) { color: $blue-1; }
+		
+		i {
+			transition: all .5s ease-in-out;
+			-ms-transition: all .5s ease-in-out;
+			-moz-transition: all .5s ease-in-out;
+			-webkit-transition: all .5s ease-in-out;
+			
+			&:hover {
+				transform: rotate(360deg) scale(2);
+				-ms-transform: rotate(360deg);
+				-moz-transform: rotate(360deg);
+				-webkit-transform: rotate(360deg) scale(2);
+			}
+		}
 	}
 }
 
 section#pitch {
-	margin-bottom: 12px;
+	margin-bottom: 20px;
 	font-size: 19px;
 	text-align: center;
 }
 
 section#promotion, section#action {
 	.promotion-column {
-		padding: 0 10px;
+		padding: 0 20px;
 	}
 		
 	.title {
@@ -145,5 +159,5 @@ section#promotion, section#action {
 }
 
 section#action {
-	margin-top: 12px;
+	margin-top: 20px;
 }
