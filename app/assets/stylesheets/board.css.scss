@@ -2,7 +2,7 @@
 @import "utils";
 
 header, main, footer {
-	width: 890px;
+	width: $width;
 	margin: 0 auto;
 	font-family: "Droid Sans", "sans-serif";
 	font-size: 14px;
@@ -160,4 +160,24 @@ section#promotion, section#action {
 
 section#action {
 	margin-top: 20px;
+}
+
+#new-schedule {
+	input[type="text"], select {
+		@include border-box;
+		width: 100%;
+	}
+	
+	.row:not(:last-child) {
+		margin-bottom: 10px;
+	}
+	
+	#day-of-week-select {
+		text-align: center;
+		
+		.day {
+			display: inline-block;
+			margin: 0 2px;
+		}
+	}
 }

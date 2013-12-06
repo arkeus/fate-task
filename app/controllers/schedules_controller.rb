@@ -1,6 +1,9 @@
 class SchedulesController < ApplicationController
+	around_action :redirect_errors
+	
 	def list
-		@board = Board.where(name: post_params[:board])
+		@board = Board.where(name: post_params[:board]).first
+		raise "Unknown board" unless @board
 		render json: @board.schedules
 	end
 	
@@ -13,6 +16,6 @@ class SchedulesController < ApplicationController
 	private
 	
 	def post_params
-		params.require(:board).permit(:board_id, :name)
+		params.permit(:board, :board_id, :name)
 	end
 end

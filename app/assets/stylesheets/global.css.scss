@@ -28,9 +28,9 @@
 
 // Form and nav elements
 
-body, input, textarea, button {
-	font-family: verdana, helvetica, sans-serif;
-	font-size: 11px;
+body, input, textarea, button, select {
+	font-family: "Droid Sans", "sans-serif";
+	font-size: 14px;
 }
 
 a, input[type="submit"], button[type="submit"] {
@@ -42,7 +42,7 @@ a, input[type="submit"], button[type="submit"] {
 	&:focus { outline: none; }
 }
 
-input[type="text"], input[type="password"], textarea {
+input[type="text"], input[type="password"], textarea, select {
 	box-shadow: 0 0 4px #ddd;
 	padding: 4px 8px;
 	border-radius: 3px;
@@ -59,7 +59,11 @@ input[type="text"], input[type="password"], textarea {
 	}
 }
 
-input[type="submit"], button {
+select {
+	padding: 2px 4px;
+}
+
+input[type="submit"], button, .button {
 	@include button;
 }
 

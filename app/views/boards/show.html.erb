@@ -1,1 +1,21 @@
+<% content_for :subtitle, @board.name %>
+
 show
+
+<div id="new-schedule" class="modal"><div>
+	<div class="header">Create A New Schedule</div>
+	<div class="content">
+		<%= form_tag "/" do %>
+			<%= text_field_tag :name, nil, placeholder: "The name of your group", class: "row" %>
+			<%= select_tag :type, options_for_select(["Daily", "Weekly"]), class: "row" %>
+			<div class="row" id="day-of-week-select">
+				<% ["S", "M", "T", "W", "T", "F", "S"].each do |day| %>
+					<div class="day"><%= check_box_tag :day, day, true %> <%= day %></div>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+	<div class="footer align-center">
+		<a class="button">Create</a> <a class="button">Cancel</a>
+	</div>
+</div></div>
