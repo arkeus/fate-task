@@ -4,7 +4,7 @@ module BoardsHelper
 	end
 	
 	def days_of_week_abbr
-		days_of_week.map(&:first)
+		days_of_week.map { |day| [day, day.first] }
 	end
 	
 	def start_of_week_options
