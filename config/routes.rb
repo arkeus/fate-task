@@ -7,7 +7,7 @@ Task::Application.routes.draw do
 		root "boards#show", as: :board
 		
 		resources :schedules, except: [:new, :edit] do
-			resources :tasks, shallow: true, except: [:new, :edit]
+			resources :tasks, except: [:new, :edit]
 		end
 		
 		# scope "schedule" do

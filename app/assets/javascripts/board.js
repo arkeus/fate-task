@@ -27,8 +27,14 @@ app.controller("BoardController", ["$scope", "Schedule", "Board", function($scop
 	};
 }]);
 
-app.controller("ScheduleController", ["$scope", "Schedule", "Board", function($scope, Schedule, Board) {
-	
+app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope, Task, Board) {
+	$scope.addTask = function(schedule_id) {
+		var task = new Task({
+			schedule_id: schedule_id,
+			name: "Unnamed Task"
+		});
+		task.$save({ schedule_id: 1 });
+	};
 }]);
 
 app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope, Schedule) {
@@ -97,6 +103,10 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 
 app.factory("Schedule", ["$rootScope", "$resource", function($rootScope, $resource) {
 	return $resource("/:board/schedules", { board: board.name }, {});
+}]);
+
+app.factory("Task", ["$rootScope", "$resource", function($rootScope, $resource) {
+	return $resource("/:board/schedules/:schedule_id/tasks", { board: board.name }, {});
 }]);
 
 app.factory("Board", ["$rootScope", function($rootScope) {
