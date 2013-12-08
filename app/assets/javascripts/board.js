@@ -3,18 +3,26 @@
 //
 	
 app.run(["$rootScope", function($rootScope) {
-	
+	$("#schedule-form").submit(function(e) { e.preventDefault(); });
 }]);
 
 //
 // CONTROLLERS
 //
 
-app.controller("BoardController", ["$scope", function($scope) {
-	$scope.schedules = null;
+app.controller("BoardController", ["$scope", "Schedule", function($scope, Schedule) {
+	$scope.schedules = Schedule.list;
 	
 	$scope.create = function(schedule) {
-		
+		console.error("HI?");
+	};
+}]);
+
+app.controller("ModalController", ["$scope", "Schedule", function($scope, Schedule) {
+	$scope.schedule = {};
+	
+	$scope.create = function() {
+		console.error("Schedule", $scope.schedule);
 	};
 }]);
 

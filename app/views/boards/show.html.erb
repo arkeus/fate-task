@@ -2,20 +2,22 @@
 
 show
 
-<div id="new-schedule" class="modal"><div>
+<div id="new-schedule" class="modal" ng-controller="ModalController"><div>
 	<div class="header">Create A New Schedule</div>
 	<div class="content">
-		<%= form_tag "/" do %>
-			<%= text_field_tag :name, nil, placeholder: "The name of your group", class: "row" %>
-			<%= select_tag :type, options_for_select(["Daily", "Weekly"]), class: "row" %>
+		<%= form_tag nil, id: "schedule-form" do %>
+			<%= text_field_tag :name, nil, placeholder: "Name", class: "row", "ng-model" => "schedule.name" %>
+			<%= select_tag :type, options_for_select(["Daily", "Weekly"]), class: "row", "ng-model" => "schedule.type" %>
 			<div class="row" id="day-of-week-select">
-				<% ["S", "M", "T", "W", "T", "F", "S"].each do |day| %>
+				<% days_of_week_abbr.each do |day| %>
 					<div class="day"><%= check_box_tag :day, day, true %> <%= day %></div>
 				<% end %>
 			</div>
+			<%= select_tag :start_of_week, grouped_options_for_select(start_of_week_options), class: "row" %>
 		<% end %>
 	</div>
 	<div class="footer align-center">
-		<a class="button">Create</a> <a class="button">Cancel</a>
+		<a class="button" ng-click="create()">Create</a>
+		<a class="button" ng-click="cancel">Cancel</a>
 	</div>
 </div></div>

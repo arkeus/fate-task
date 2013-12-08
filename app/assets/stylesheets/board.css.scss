@@ -96,17 +96,17 @@ footer {
 		a:nth-child(4) { color: $green-3; }
 		a:nth-child(5) { color: $blue-1; }
 		
-		i {
+		a > i {
 			transition: all .5s ease-in-out;
 			-ms-transition: all .5s ease-in-out;
 			-moz-transition: all .5s ease-in-out;
 			-webkit-transition: all .5s ease-in-out;
 			
 			&:hover {
-				transform: rotate(360deg) scale(2);
-				-ms-transform: rotate(360deg);
-				-moz-transform: rotate(360deg);
-				-webkit-transform: rotate(360deg) scale(2);
+				// transform: rotate(360deg) scale(2);
+				// -ms-transform: rotate(360deg) scale(2);
+				// -moz-transform: rotate(360deg) scale(2);
+				// -webkit-transform: rotate(360deg) scale(2);
 			}
 		}
 	}
