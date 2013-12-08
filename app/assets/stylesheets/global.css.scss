@@ -42,6 +42,23 @@ a, input[type="submit"], button[type="submit"] {
 	&:focus { outline: none; }
 }
 
+.clickable {
+	@include unselectable;
+	cursor: pointer;
+	&:visited { color: #b93838; }
+	&:hover { color: #baa938; }
+	&:active { color: #51ba38; }
+	&:focus { outline: none; }
+}
+
+.deletable {
+	@include unselectable;
+	cursor: pointer;
+	color: #ddd;
+	&:hover { color: $red-2; }
+	&:active { color: $blue-2; }
+}
+
 input[type="text"], input[type="password"], textarea, select {
 	box-shadow: 0 0 4px #ddd;
 	padding: 4px 8px;

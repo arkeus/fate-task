@@ -10,14 +10,20 @@
 <table border=0 ng-repeat="schedule in schedules" class="schedule {{schedule.schedule_type}}" ng-controller="ScheduleController">
 	<thead>
 		<tr>
-			<th class="schedule-name">{{schedule.name}}</th>
+			<th class="schedule-name">
+				<span class="clickable">{{schedule.name}}</span>
+				<span class="deletable" ng-click="deleteSchedule(schedule)"><%= fa_icon "times" %></span>
+			</th>
 			<th ng-repeat="point in schedule.points" class="point-header">{{point.display}}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="task in schedule.tasks">
-			<td>{{task.name}}</td>
-			<td ng-repeat="point in schedule.points">
+		<tr ng-repeat="task in schedule.schedule_tasks">
+			<td class="task-name">
+				<span class="clickable">{{task.name}}</span>
+				<span class="deletable" ng-click="deleteTask(task)"><%= fa_icon "times" %></span>
+			</td>
+			<td ng-repeat="point in schedule.points" class="task-point" ng-class="{ future: point.future }">
 				a
 			</td>
 		</tr>
@@ -36,7 +42,7 @@
 	<div class="header">{{title}}</div>
 	<div class="content">
 		<div class="error" ng-show="error != null">{{error}}</div>
-		<%= form_tag nil, id: "schedule-form" do %>
+		<%= form_tag "", id: "schedule-form", "ng-submit" => "createSubmit()" do %>
 			<%= text_field_tag :name, nil, placeholder: "Name", class: "row", autocomplete: "off", "ng-model" => "schedule.name" %>
 			<%= select_tag :schedule_type, options_for_select(["Daily", "Weekly"].map { |type| [type, type.downcase] }), class: "row", "ng-model" => "schedule.schedule_type" %>
 			<div class="row" id="day-of-week-select" ng-show="schedule.schedule_type == 'daily'">

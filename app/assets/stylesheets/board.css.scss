@@ -118,26 +118,45 @@ main {
 		width: 100%;
 		
 		thead {
-			tr {
-				.schedule-name {
-					width: 100%;
-					text-align: left;
-					font-size: 20px;
-					vertical-align: bottom;
-				}
-				
-				.point-header {
-					white-space: nowrap;
-					padding: 2px 0;
-					color: #777;
-					vertical-align: bottom;
-				}
+			.schedule-name {
+				width: 100%;
+				text-align: left;
+				font-size: 20px;
+				vertical-align: bottom;
+			}
+			
+			.point-header {
+				white-space: nowrap;
+				padding: 2px 0;
+				color: #777;
+				vertical-align: bottom;
+			}
+			
+			th {
+				.deletable { display: none; }
+				&:hover .deletable { display: inline; }
 			}
 		}
 		
 		tbody {
 			td {
 				font-size: 14px;
+				padding-bottom: 4px;
+				
+				.deletable { display: none; }
+				&:hover .deletable { display: inline; }
+			}
+			
+			.task-name {
+				color: #555;
+			}
+			
+			.task-point {
+				text-align: center;
+				
+				&.future {
+					color: red;
+				}
 			}
 		}
 		

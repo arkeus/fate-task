@@ -1,11 +1,30 @@
 class TasksController < ApplicationController
 	around_action :render_errors
-	before_action :set_schedule, only: [:index]
+	before_action :set_schedule, only: [:index, :create]
 	before_action :set_task, only: [:show, :update, :destroy]
 	layout false
 	
 	def index
 		render json: @schedule.schedule_tasks
+	end
+	
+	def create
+		@task = ScheduleTask.new(post_params[:task].merge(schedule: @schedule))
+		@task.save!
+		render json: @task
+	end
+	
+	def show
+		render json: @task
+	end
+	
+	def update
+		# unsure
+	end
+	
+	def destroy
+		@task.destroy!
+		render nothing: true, status: 200
 	end
 	
 	private
@@ -16,11 +35,11 @@ class TasksController < ApplicationController
 	end
 	
 	def set_task
-		@task = ScheduleTask.where(id: post_params[:task_id]).first
+		@task = ScheduleTask.where(id: post_params[:id]).first
 		raise "Unknown task" unless @task
 	end
 	
 	def post_params
-		params.permit(:board, :schedule_id, :task_id, task: [:name, :schedule_id])
+		params.permit(:board, :schedule_id, :task_id, :id, task: [:name, :schedule_id])
 	end
 end
