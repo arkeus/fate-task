@@ -10,38 +10,68 @@ app.run(["$rootScope", function($rootScope) {
 // CONTROLLERS
 //
 
-app.controller("BoardController", ["$scope", "Schedule", function($scope, Schedule) {
+app.controller("BoardController", ["$scope", "Schedule", "Board", function($scope, Schedule, Board) {
 	$scope.loading = true;
-	$scope.schedules = Schedule.query(function() {
-		console.info("Schedules", $scope.schedules);
+	$scope.schedules = null;
+	$scope.error = null;
+	
+	Schedule.query().$promise.then(function(schedules) {
+		$scope.schedules = schedules;
 		$scope.loading = false;
+	}, function() {
+		$scope.error = "Could not load schedules";
 	});
+	
+	$scope.createSchedule = function() {
+		Board.createSchedule();
+	};
+}]);
+
+app.controller("ScheduleController", ["$scope", "Schedule", "Board", function($scope, Schedule, Board) {
+	
 }]);
 
 app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope, Schedule) {
 	$scope.schedule = null;
 	$scope.title = null;
 	$scope.action = null;
+	$scope.state = null;
+	$scope.error = null;
 	
 	$scope.createSubmit = function() {
-		console.error("Schedule", $scope.schedule);
+		var schedule = new Schedule($scope.schedule);
+		schedule.$save(function(schedule) {
+			$scope.schedules.push(schedule);
+		}, function(error) {
+			$scope.error = error['data']['error'];
+			console.error("GOT AN ERROR", error);
+		});
 	};
 	
-	$scope.create = function() {
+	$scope.editSubmit = function() {
+		
+	};
+	
+	$scope.$on("create-schedule", function(message) {
 		$scope.schedule = {
 			name: "",
-			type: "daily",
+			schedule_type: "daily",
 			daily_days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-			weekly_start: "Sunday"
+			weekly_start: 0
 		};
 		$scope.title = "Create A New Schedule";
 		$scope.action = "Create";
-	};
+		$scope.state = "modal";
+	});
 	
-	$scope.edit = function(schedule) {
+	$scope.$on("edit-schedule", function(message, schedule) {
 		$scope.schedule = schedule;
 		$schedule.title = "Edit A Schedule";
 		$schedule.action = "Save";
+	});
+	
+	$scope.cancel = function() {
+		$scope.state = "board";
 	};
 	
 	$scope.isCreateDisabled = function() {
@@ -59,8 +89,6 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 			$scope.schedule.daily_days.push(day);
 		}
 	};
-	
-	$scope.create();
 }]);
 
 //
@@ -68,9 +96,17 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 //
 
 app.factory("Schedule", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/schedule", { board: BOARD_NAME }, {
-		list: { method: "GET", params: { action: "list" }, isArray: true }
-	});
+	return $resource("/:board/schedules", { board: board.name }, {});
+}]);
+
+app.factory("Board", ["$rootScope", function($rootScope) {
+	var module = {};
+	
+	module.createSchedule = function() {
+		$rootScope.$broadcast("create-schedule");
+	};
+	
+	return module;
 }]);
 
 //

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
   
   def redirect_errors
   	begin
@@ -9,6 +9,14 @@ class ApplicationController < ActionController::Base
   	rescue => e
   		flash[:error] = e.message
   		redirect_to root_path
+  	end
+  end
+  
+  def render_errors
+  	begin
+  		yield
+  	rescue => e
+  		render json: { error: e.message }, status: 422
   	end
   end
 end

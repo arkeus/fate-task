@@ -4,13 +4,14 @@
 header, main, footer {
 	width: $width;
 	margin: 0 auto;
-	font-family: "Droid Sans", "sans-serif";
+	font-family: "Droid Sans", sans-serif;
 	font-size: 14px;
 }
 
 header {
 	@include clearfix;
 	@include unselectable;
+	
 	position: relative;
 	margin-bottom: 16px;
 	padding-bottom: 6px;
@@ -67,7 +68,87 @@ header {
 }
 
 main {
+	.error {
+		color: red;
+		font-weight: bold;
+		margin-bottom: 8px;
+	}
 	
+	section#action {
+		margin-top: 20px;
+	}
+	
+	#new-schedule {
+		input[type="text"], select {
+			@include border-box;
+			width: 100%;
+		}
+		
+		.row:not(:last-child) {
+			margin-bottom: 10px;
+		}
+		
+		#day-of-week-select {
+			text-align: center;
+			
+			.day {
+				display: inline-block;
+				margin: 0 2px;
+			}
+		}
+		
+		.error {
+			color: red;
+			font-weight: bold;
+			margin-bottom: 8px;
+		}
+	}
+	
+	#no-schedules {
+		margin: 12px 0;
+		color: $gray-1;
+	}
+	
+	#actions {
+		margin: 12px 0;
+	}
+	
+	table.schedule {
+		margin-bottom: 12px;
+		width: 100%;
+		
+		thead {
+			tr {
+				.schedule-name {
+					width: 100%;
+					text-align: left;
+					font-size: 20px;
+					vertical-align: bottom;
+				}
+				
+				.point-header {
+					white-space: nowrap;
+					padding: 2px 0;
+					color: #777;
+					vertical-align: bottom;
+				}
+			}
+		}
+		
+		tbody {
+			td {
+				font-size: 14px;
+			}
+		}
+		
+		&.weekly .point-header {
+			min-width: 80px;
+		}
+		
+		&.daily .point-header {
+			min-width: 40px;
+		}
+	}
 }
 
 footer {
@@ -154,30 +235,6 @@ section#promotion, section#action {
 		
 		input[type="submit"] {
 			width: 70px;
-		}
-	}
-}
-
-section#action {
-	margin-top: 20px;
-}
-
-#new-schedule {
-	input[type="text"], select {
-		@include border-box;
-		width: 100%;
-	}
-	
-	.row:not(:last-child) {
-		margin-bottom: 10px;
-	}
-	
-	#day-of-week-select {
-		text-align: center;
-		
-		.day {
-			display: inline-block;
-			margin: 0 2px;
 		}
 	}
 }

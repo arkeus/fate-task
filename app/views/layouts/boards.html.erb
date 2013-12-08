@@ -13,9 +13,9 @@
 	<div id="subtitle"><%= yield :subtitle %></div>
 </header>
 
-<main ng-app="task" ng-controller="BoardController">
+<%= content_tag :main, main_attributes do %>
 	<%= yield %>
-</main>
+<% end %>
 
 <footer>
 	<div id="copyright">&copy; Copyright Lee Miller <%= Time.now.year %></div>

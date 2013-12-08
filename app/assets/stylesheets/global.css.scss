@@ -72,6 +72,7 @@ a {
 	
 	&.button {
 		@include button;
+		@include unselectable;
 		
 		&.disabled {
 			color: #aaa;

@@ -8,6 +8,12 @@ module BoardsHelper
 	end
 	
 	def start_of_week_options
-		{ "Start Of Week" => days_of_week }
+		{ "Start Of Week" => Array(0..6).map { |index| [days_of_week[index], index] } }
+	end
+	
+	def main_attributes
+		attributes = { "ng-app" => "task" }
+		attributes['ng-controller'] = content_for :ng_controller if content_for?(:ng_controller)
+		attributes
 	end
 end

@@ -6,20 +6,24 @@ Task::Application.routes.draw do
 	scope ":board" do
 		root "boards#show", as: :board
 		
-		scope "schedule" do
-			root "schedules#list", as: :schedules
-			post "/create" => "schedules#create", as: :create_schedule
-		
-			scope "/:schedule_id" do
-				root "schedules#show", as: :schedule
-				
-				scope "/task" do
-					patch "/:task_id/complete" => "tasks#complete", as: :complete_task
-					patch "/:task_id/uncomplete" => "tasks#uncomplete", as: :uncomplete_task
-					post "/create" => "tasks#create", as: :create_task
-				end
-			end
+		resources :schedules, except: [:new, :edit] do
+			resources :tasks, shallow: true, except: [:new, :edit]
 		end
+		
+		# scope "schedule" do
+			# root "schedules#list", as: :schedules
+			# post "/create" => "schedules#create", as: :create_schedule
+# 		
+			# scope "/:schedule_id" do
+				# root "schedules#show", as: :schedule
+# 				
+				# scope "/task" do
+					# patch "/:task_id/complete" => "tasks#complete", as: :complete_task
+					# patch "/:task_id/uncomplete" => "tasks#uncomplete", as: :uncomplete_task
+					# post "/create" => "tasks#create", as: :create_task
+				# end
+			# end
+		# end
 	end
 	
   # The priority is based upon order of creation: first created -> highest priority.

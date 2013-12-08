@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20131203063550) do
   add_index "boards", ["name"], name: "index_boards_on_name", unique: true
 
   create_table "schedule_tasks", force: true do |t|
-    t.string   "name"
     t.integer  "schedule_id"
+    t.string   "name"
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -32,8 +32,11 @@ ActiveRecord::Schema.define(version: 20131203063550) do
   add_index "schedule_tasks", ["schedule_id"], name: "index_schedule_tasks_on_schedule_id"
 
   create_table "schedules", force: true do |t|
-    t.string   "name"
     t.integer  "board_id"
+    t.string   "name"
+    t.string   "schedule_type"
+    t.string   "daily_days"
+    t.integer  "weekly_start"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
