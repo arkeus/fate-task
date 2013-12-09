@@ -6,7 +6,12 @@ Task::Application.routes.draw do
 	scope ":board" do
 		root "boards#show", as: :board
 		resources :schedules, except: [:new, :edit] do
-			resources :tasks, except: [:new, :edit]
+			resources :tasks, except: [:new, :edit] do
+				member do
+					put "complete"
+					put "uncomplete"
+				end
+			end
 		end
 	end
 end

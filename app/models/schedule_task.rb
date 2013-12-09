@@ -4,9 +4,10 @@ class ScheduleTask < ActiveRecord::Base
 	after_initialize :after_initialize
 	validates :name, presence: true
 	
-	attr_accessor :points
+	HISTORY_SIZE = 20.freeze
 	
 	def before_save
+		self.data = self.data.sort[-HISTORY_SIZE..data.size] if data.size > HISTORY_SIZE
 		self.data = data.join(",")
 	end
 	
@@ -14,16 +15,16 @@ class ScheduleTask < ActiveRecord::Base
 		self.data = build_points
 	end
 	
-	def complete
-		
+	def complete(value)
+		self.data << value
 	end
 	
-	def uncomplete
-		
+	def uncomplete(value)
+		self.data.delete(value)
 	end
 	
 	def as_json(options = {})
-		super(methods: [:points], except: [:created_at, :updated_at])
+		super(except: [:created_at, :updated_at])
 	end
 	
 	private
