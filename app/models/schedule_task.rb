@@ -6,35 +6,37 @@ class ScheduleTask < ActiveRecord::Base
 	
 	HISTORY_SIZE = 20.freeze
 	
+	attr_accessor :points
+	
 	def before_save
-		self.data = self.data.sort[-HISTORY_SIZE..data.size] if data.size > HISTORY_SIZE
-		self.data = data.join(",")
+		self.points = points.sort[-HISTORY_SIZE..points.size] if points.size > HISTORY_SIZE
+		self.data = points.join(",")
 	end
 	
 	def after_initialize
-		self.data = build_points
+		self.points = build_points
 	end
 	
 	def complete(value)
-		self.data << value
+		self.points << value
 	end
 	
 	def uncomplete(value)
-		self.data.delete(value)
+		self.points.delete(value)
 	end
 	
 	def as_json(options = {})
-		super(except: [:created_at, :updated_at])
+		super(methods: [:points], except: [:created_at, :updated_at, :data])
 	end
 	
 	private
 	
 	def build_points
 		points = []
-		data_points = JSON.parse(data || "{}")
+		data_points = Set.new((data || "").split(",").map(&:to_i))
 		schedule.points.each do |point|
-			points << point['value'] if data_points.has_key?(point['value'])
-		end
+			points << point[:value] if data_points.include?(point[:value])
+		end		
 		points
 	end
 end

@@ -30,7 +30,7 @@ class SchedulesController < ApplicationController
 	private
 	
 	def set_board
-		@board = Board.where(name: post_params[:board]).first
+		@board = Board.includes(:schedules).where(name: post_params[:board]).first
 		raise "Unknown board" unless @board
 	end
 	

@@ -89,6 +89,17 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 			}
 		});
 	};
+	
+	$scope.markTask = function() {
+		var task = new Task(this.task);
+		var value = this.point.value;
+		var params = { schedule_id: task.schedule_id, id: task.id, value: value };
+		if (task.points.indexOf(value) == -1) {
+			task.$complete(params);
+		} else {
+			task.$uncomplete(params);
+		}
+	};
 }]);
 
 app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope, Schedule) {
@@ -162,8 +173,10 @@ app.factory("Schedule", ["$rootScope", "$resource", function($rootScope, $resour
 }]);
 
 app.factory("Task", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/schedules/:schedule_id/tasks/:id", { board: board.name }, {
-		update: { method: "PUT" }
+	return $resource("/:board/schedules/:schedule_id/tasks/:id/:action", { board: board.name }, {
+		update: { method: "PUT" },
+		complete: { method: "PUT", params: { action: "complete" } },
+		uncomplete: { method: "PUT", params: { action: "uncomplete" } }
 	});
 }]);
 
