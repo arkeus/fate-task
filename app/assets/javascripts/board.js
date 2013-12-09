@@ -91,12 +91,15 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 	};
 	
 	$scope.markTask = function() {
+		var task_hash = this.task;
 		var task = new Task(this.task);
 		var value = this.point.value;
 		var params = { schedule_id: task.schedule_id, id: task.id, value: value };
 		if (task.points.indexOf(value) == -1) {
+			task_hash.points.push(value);
 			task.$complete(params);
 		} else {
+			task_hash.points.splice(task.points.indexOf(value), 1);
 			task.$uncomplete(params);
 		}
 	};

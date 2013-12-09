@@ -32,14 +32,14 @@ class TasksController < ApplicationController
 	end
 	
 	def complete
-		value = params.require(:value)
+		value = params.require(:value).to_i
 		@task.complete(value)
 		@task.save!
 		render nothing: true, status: 200
 	end
 	
 	def uncomplete
-		value = params.require(:value)
+		value = params.require(:value).to_i
 		@task.uncomplete(value)
 		@task.save!
 		render nothing: true, status: 200
