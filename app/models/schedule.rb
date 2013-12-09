@@ -44,7 +44,8 @@ class Schedule < ActiveRecord::Base
 	def as_json(options = {})
 		super(methods: [:points], include: {
 			schedule_tasks: {
-				except: [:created_at, :updated_at]
+				except: [:created_at, :updated_at],
+				methods: [:points],
 			}
 		}, except: [:created_at, :updated_at])
 	end

@@ -132,20 +132,12 @@ main {
 				color: #777;
 				vertical-align: bottom;
 			}
-			
-			th {
-				.deletable { display: none; float: right; }
-				&:hover .deletable { display: inline; }
-			}
 		}
 		
 		tbody {
 			td {
 				font-size: 14px;
 				padding-bottom: 4px;
-				
-				.deletable { display: none; float: right; }
-				&:hover .deletable { display: inline; }
 			}
 			
 			.task-name {
@@ -173,10 +165,38 @@ main {
 			.task-point {
 				text-align: center;
 				
-				&.future {
-					color: red;
+				&:hover {
+					cursor: pointer;
+				}
+				
+				&.future span {
+					color: $gray-1;
+				}
+				
+				.incomplete {
+					color: $red-2;
+				}
+				
+				&:hover .incomplete {
+					color: $green-2;
+				}
+				
+				.complete {
+					color: $green-2;
+				}
+				
+				&:hover .complete {
+					color: $red-2;
 				}
 			}
+		}
+		
+		.deletable {
+			display: none;
+		}
+		
+		td:hover:not(.editing) .deletable, th:hover:not(.editing) .deletable {
+			display: inline;
 		}
 		
 		&.weekly .point-header {

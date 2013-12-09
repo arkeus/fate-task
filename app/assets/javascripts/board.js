@@ -65,17 +65,23 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 		var container = element.parent();
 		var editable = $("<input>").attr({ type: "text", value: task.name }).addClass("editable-task");
 		element.hide();
-		container.append(editable);
+		container.append(editable).addClass("editing");
 		editable.focus().on("blur", function(event) {
 			editable.prop("disabled", true);
+			container.removeClass("editing");
 			task.name = editable.val();
-			console.warn(editable.val(), task.name, self.task.name);
+			if (task.name == self.task.name) {
+				editable.remove();
+				element.show();
+				return;
+			}
 			task.$update({ schedule_id: task.schedule_id, id: task.id }).then(function() {
 				self.task.name = editable.val();
 				editable.remove();
 				element.show();
 			}, function() {
-				console.error("FAIL");
+				editable.remove();
+				element.show();
 			});
 		}).on("keydown", function(event) {
 			if (event.which == 13) {

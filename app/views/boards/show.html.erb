@@ -24,7 +24,8 @@
 				<span class="deletable" ng-click="deleteTask(task)"><%= fa_icon "times" %></span>
 			</td>
 			<td ng-repeat="point in schedule.points" class="task-point" ng-class="{ future: point.future }">
-				a
+				<span ng-show="task.points.indexOf(point.value) != -1" class="complete"><%= fa_icon "check" %></span>
+				<span ng-show="task.points.indexOf(point.value) == -1" class="incomplete"><%= fa_icon "times" %></span>
 			</td>
 		</tr>
 		<tr ng-show="schedule.tasks.length < 1">
