@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   	begin
   		yield
   	rescue => e
+  		puts Rails.logger.error "#{e.message} #{e.backtrace.join("\n")}"
   		render json: { error: e.message }, status: 422
   	end
   end

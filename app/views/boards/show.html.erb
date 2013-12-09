@@ -20,7 +20,7 @@
 	<tbody>
 		<tr ng-repeat="task in schedule.schedule_tasks">
 			<td class="task-name">
-				<span class="clickable">{{task.name}}</span>
+				<span class="clickable" ng-click="editTask($event)">{{task.name}}</span>
 				<span class="deletable" ng-click="deleteTask(task)"><%= fa_icon "times" %></span>
 			</td>
 			<td ng-repeat="point in schedule.points" class="task-point" ng-class="{ future: point.future }">

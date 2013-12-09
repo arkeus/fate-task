@@ -57,6 +57,32 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 			$scope.schedule.schedule_tasks.push(task_hash);
 		});
 	};
+	
+	$scope.editTask = function(event) {
+		var self = this;
+		var task = new Task(self.task);
+		var element = $(event.target);
+		var container = element.parent();
+		var editable = $("<input>").attr({ type: "text", value: task.name }).addClass("editable-task");
+		element.hide();
+		container.append(editable);
+		editable.focus().on("blur", function(event) {
+			editable.prop("disabled", true);
+			task.name = editable.val();
+			console.warn(editable.val(), task.name, self.task.name);
+			task.$update({ schedule_id: task.schedule_id, id: task.id }).then(function() {
+				self.task.name = editable.val();
+				editable.remove();
+				element.show();
+			}, function() {
+				console.error("FAIL");
+			});
+		}).on("keydown", function(event) {
+			if (event.which == 13) {
+				$(this).blur();
+			}
+		});
+	};
 }]);
 
 app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope, Schedule) {
@@ -124,11 +150,15 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 //
 
 app.factory("Schedule", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/schedules/:id", { board: board.name }, {});
+	return $resource("/:board/schedules/:id", { board: board.name }, {
+		update: { method: "PUT" }
+	});
 }]);
 
 app.factory("Task", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/schedules/:schedule_id/tasks/:id", { board: board.name }, {});
+	return $resource("/:board/schedules/:schedule_id/tasks/:id", { board: board.name }, {
+		update: { method: "PUT" }
+	});
 }]);
 
 app.factory("Board", ["$rootScope", function($rootScope) {

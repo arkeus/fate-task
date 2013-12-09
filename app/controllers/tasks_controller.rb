@@ -19,7 +19,11 @@ class TasksController < ApplicationController
 	end
 	
 	def update
-		# unsure
+		puts @task.inspect
+		puts post_params[:task][:name]
+		@task.name = post_params[:task][:name]
+		@task.save!
+		render nothing: true, status: 200
 	end
 	
 	def destroy
@@ -40,6 +44,6 @@ class TasksController < ApplicationController
 	end
 	
 	def post_params
-		params.permit(:board, :schedule_id, :task_id, :id, task: [:name, :schedule_id])
+		params.permit(:board, :schedule_id, :task_id, :id, task: [:id, :name, :schedule_id])
 	end
 end

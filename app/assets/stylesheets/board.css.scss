@@ -2,6 +2,7 @@
 @import "utils";
 
 header, main, footer {
+	@include unselectable; // Undo if it's annoying
 	width: $width;
 	margin: 0 auto;
 	font-family: "Droid Sans", sans-serif;
@@ -13,7 +14,7 @@ header {
 	@include unselectable;
 	
 	position: relative;
-	margin-bottom: 16px;
+	margin-bottom: 10px;
 	padding-bottom: 6px;
 	border-bottom: 1px solid #eee;
 	cursor: default;
@@ -133,7 +134,7 @@ main {
 			}
 			
 			th {
-				.deletable { display: none; }
+				.deletable { display: none; float: right; }
 				&:hover .deletable { display: inline; }
 			}
 		}
@@ -143,12 +144,30 @@ main {
 				font-size: 14px;
 				padding-bottom: 4px;
 				
-				.deletable { display: none; }
+				.deletable { display: none; float: right; }
 				&:hover .deletable { display: inline; }
 			}
 			
 			.task-name {
 				color: #555;
+			}
+			
+			.editable-task {
+				border: 0;
+				padding: 0;
+				margin: 0;
+				width: 80%;
+				box-shadow: none;
+				color: $blue-2;
+				
+				&:focus {
+					outline: none;
+				}
+				
+				&:disabled {
+					background: none;
+					color: #ccc;
+				}
 			}
 			
 			.task-point {
