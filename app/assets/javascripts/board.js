@@ -116,6 +116,7 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 		var schedule = new Schedule($scope.schedule);
 		schedule.$save(function(schedule) {
 			$scope.schedules.push(schedule);
+			$scope.cancel();
 		}, function(error) {
 			$scope.error = error['data']['error'];
 			console.error("GOT AN ERROR", error);
