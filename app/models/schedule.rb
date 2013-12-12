@@ -20,25 +20,27 @@ class Schedule < ActiveRecord::Base
 	end
 	
 	def generate_points
-		points = []
-		time = Time.now
-		if schedule_type == "daily"
-			limit = 8
-			time += 1.day until daily_days.include?(time.strftime("%A")) || (limit -= 1) <= 0
-			until points.length >= NUM_DAILY_POINTS do
-				points << { value: TimeUtil::day_number(time), display: time.mday.ordinalize, future: time.future? } if daily_days.include?(time.strftime("%A"))
-				time -= 1.day
+		Time.use_zone("Pacific Time (US & Canada)") do
+			points = []
+			time = Time.now.in_time_zone
+			if schedule_type == "daily"
+				limit = 8
+				time += 1.day until daily_days.include?(time.strftime("%A")) || (limit -= 1) <= 0
+				until points.length >= NUM_DAILY_POINTS do
+					points << { value: TimeUtil::day_number(time), display: time.mday.ordinalize, future: time.future? } if daily_days.include?(time.strftime("%A"))
+					time -= 1.day
+				end
+			elsif schedule_type == "weekly"
+				limit = 8
+				time -= 1.day while time.wday != weekly_start && (limit -= 1) > 0
+				raise "Could not find week start" unless limit > 0
+				NUM_WEEKLY_POINTS.times do
+					points << { value: TimeUtil::week_number(time), display: "#{time.mday.ordinalize} - #{(time + 6.days).mday.ordinalize}" }
+					time -= 7.days
+				end
 			end
-		elsif schedule_type == "weekly"
-			limit = 8
-			time -= 1.day while time.wday != weekly_start && (limit -= 1) > 0
-			raise "Could not find week start" unless limit > 0
-			NUM_WEEKLY_POINTS.times do
-				points << { value: TimeUtil::week_number(time), display: "#{time.mday.ordinalize} - #{(time + 6.days).mday.ordinalize}" }
-				time -= 7.days
-			end
+			points
 		end
-		points
 	end
 	
 	def as_json(options = {})
