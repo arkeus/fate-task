@@ -1,0 +1,20 @@
+<div id="new-schedule" class="modal" ng-controller="ScheduleModalController" ng-show="state == 'modal'"><div>
+	<div class="header">{{title}}</div>
+	<div class="content">
+		<div class="error" ng-show="error != null">{{error}}</div>
+		<%= form_tag "", id: "schedule-form", "ng-submit" => "createSubmit()" do %>
+			<%= text_field_tag :name, nil, placeholder: "Name", class: "row", autocomplete: "off", "ng-model" => "schedule.name" %>
+			<%= select_tag :schedule_type, options_for_select(["Daily", "Weekly"].map { |type| [type, type.downcase] }), class: "row", "ng-model" => "schedule.schedule_type" %>
+			<div class="last row" id="day-of-week-select" ng-show="schedule.schedule_type == 'daily'">
+				<% days_of_week_abbr.each do |day, day_abbr| %>
+					<div class="day"><%= check_box_tag :day, day_abbr, true, "ng-checked" => "schedule.daily_days.indexOf('#{day}') > -1", "ng-click" => "toggleDay('#{day}')" %> <%= day_abbr %></div>
+				<% end %>
+			</div>
+			<%= select_tag :start_of_week, grouped_options_for_select(start_of_week_options), class: "last row", "ng-show" => "schedule.schedule_type == 'weekly'", "ng-model" => "schedule.weekly_start" %>
+		<% end %>
+	</div>
+	<div class="footer align-center">
+		<a class="button" ng-click="createSubmit()" ng-class="{ disabled: isCreateDisabled() }">{{action}}</a>
+		<a class="button" ng-click="cancel()">Cancel</a>
+	</div>
+</div></div>
