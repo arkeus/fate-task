@@ -30,7 +30,7 @@ class SchedulesController < ApplicationController
 	private
 	
 	def set_board
-		@board = Board.includes(:schedules).where(name: post_params[:board]).first
+		@board = Board.includes(:schedules).where(name: post_params[:board_name]).first
 		raise "Unknown board" unless @board
 	end
 	
@@ -40,6 +40,6 @@ class SchedulesController < ApplicationController
 	end
 	
 	def post_params
-		params.permit(:board, :schedule_id, :id, schedule: [:name, :schedule_type, { daily_days: [] }, :weekly_start, :board])
+		params.permit(:board_name, :schedule_id, :id, schedule: [:name, :schedule_type, { daily_days: [] }, :weekly_start, :board])
 	end
 end
