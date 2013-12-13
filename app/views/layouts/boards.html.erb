@@ -6,27 +6,23 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-
-<header>
-	<%= render partial: "brand" %>
-	<div id="subtitle"><%= yield :subtitle %></div>
-</header>
-
-<%= content_tag :main, main_attributes do %>
-	<%= yield %>
+<%= content_tag :body, body_attributes do %>
+	<header>
+		<%= render partial: "brand" %>
+		<div id="subtitle"><%= yield :subtitle %></div>
+	</header>
+	
+	<main><%= yield %></main>
+	
+	<footer>
+		<div id="copyright">&copy; Lee Miller <%= Time.now.year %></div>
+		<div id="footer-links">
+			<a href="http://blog.iarke.us"><%= fa_icon "square" %></a>
+			<a href="https://twitter.com/#!/arkeus"><%= fa_icon "twitter-square" %></a>
+			<a href="https://github.com/arkeus"><%= fa_icon "github-square" %></a>
+			<a href="https://www.facebook.com/arkeus"><%= fa_icon "facebook-square" %></a>
+			<a href="https://plus.google.com/118186154411847048977/about"><%= fa_icon "google-plus-square" %></a>
+		</div>
+	</footer>
 <% end %>
-
-<footer>
-	<div id="copyright">&copy; Lee Miller <%= Time.now.year %></div>
-	<div id="footer-links">
-		<a href="http://blog.iarke.us"><%= fa_icon "square" %></a>
-		<a href="https://twitter.com/#!/arkeus"><%= fa_icon "twitter-square" %></a>
-		<a href="https://github.com/arkeus"><%= fa_icon "github-square" %></a>
-		<a href="https://www.facebook.com/arkeus"><%= fa_icon "facebook-square" %></a>
-		<a href="https://plus.google.com/118186154411847048977/about"><%= fa_icon "google-plus-square" %></a>
-	</div>
-</footer>
-
-</body>
 </html>
