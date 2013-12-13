@@ -5,8 +5,4 @@ class TimeUtil
 	def self.day_number(time = Time.now)
 		time.year * 10000 + time.month * 100 + time.day 
 	end
-	
-	def self.week_number(time = Time.now)
-		(time.to_i / SECS_PER_WEEK).floor
-	end
 end
