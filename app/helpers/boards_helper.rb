@@ -11,9 +11,13 @@ module BoardsHelper
 		{ "Start Of Week" => Array(0..6).map { |index| [days_of_week[index], index] } }
 	end
 	
-	def main_attributes
+	def body_attributes
 		attributes = { "ng-app" => "task" }
 		attributes['ng-controller'] = content_for :ng_controller if content_for?(:ng_controller)
-		attributes
+		attributes 
+	end
+	
+	def time_zone_options
+		options_for_select(ActiveSupport::TimeZone::MAPPING.map { |zone, name| ["#{zone} (#{name})", zone] })
 	end
 end
