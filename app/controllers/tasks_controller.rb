@@ -58,6 +58,6 @@ class TasksController < ApplicationController
 	end
 	
 	def post_params
-		params.permit(:board, :schedule_id, :task_id, :id, task: [:id, :name, :schedule_id])
+		params.permit(:schedule_id, :task_id, :id, task: [:id, :name, :schedule_id])
 	end
 end
