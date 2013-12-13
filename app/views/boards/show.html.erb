@@ -1,5 +1,7 @@
-<% content_for :subtitle, @board.name %>
 <% content_for :ng_controller, "BoardController" %>
+<% content_for :subtitle do %>
+	<%= @board.name %> <span id="options-button" ng-click="openOptions()"><%= fa_icon "gears" %></span>
+<% end %>
 
 <div class="error" ng-show="error != null">{{error}}</div>
 
@@ -23,9 +25,11 @@
 				<span class="clickable" ng-click="editTask($event)">{{task.name}}</span>
 				<span class="deletable" ng-click="deleteTask(task)"><%= fa_icon "times" %></span>
 			</td>
-			<td ng-repeat="point in schedule.points" class="task-point" ng-class="{ future: point.future }" ng-click="markTask()">
+			<td ng-repeat="point in schedule.points" class="task-point" ng-click="markTask()">
 				<span ng-show="task.points.indexOf(point.value) != -1" class="complete"><%= fa_icon "check" %></span>
-				<span ng-show="task.points.indexOf(point.value) == -1" class="incomplete"><%= fa_icon "times" %></span>
+				<span ng-show="task.points.indexOf(point.value) == -1 && point.relativity == null" class="incomplete"><%= fa_icon "times" %></span>
+				<span ng-show="task.points.indexOf(point.value) == -1 && point.relativity == '-'" class="past"><%= fa_icon "circle-o" %></span>
+				<span ng-show="task.points.indexOf(point.value) == -1 && point.relativity == '+'" class="future"><%= fa_icon "times" %></span>
 			</td>
 		</tr>
 		<tr ng-show="schedule.tasks.length < 1">
@@ -39,26 +43,8 @@
 	</tbody>
 </table>
 
-<div id="new-schedule" class="modal" ng-controller="ScheduleModalController" ng-show="state == 'modal'"><div>
-	<div class="header">{{title}}</div>
-	<div class="content">
-		<div class="error" ng-show="error != null">{{error}}</div>
-		<%= form_tag "", id: "schedule-form", "ng-submit" => "createSubmit()" do %>
-			<%= text_field_tag :name, nil, placeholder: "Name", class: "row", autocomplete: "off", "ng-model" => "schedule.name" %>
-			<%= select_tag :schedule_type, options_for_select(["Daily", "Weekly"].map { |type| [type, type.downcase] }), class: "row", "ng-model" => "schedule.schedule_type" %>
-			<div class="row" id="day-of-week-select" ng-show="schedule.schedule_type == 'daily'">
-				<% days_of_week_abbr.each do |day, day_abbr| %>
-					<div class="day"><%= check_box_tag :day, day_abbr, true, "ng-checked" => "schedule.daily_days.indexOf('#{day}') > -1", "ng-click" => "toggleDay('#{day}')" %> <%= day_abbr %></div>
-				<% end %>
-			</div>
-			<%= select_tag :start_of_week, grouped_options_for_select(start_of_week_options), class: "row", "ng-show" => "schedule.schedule_type == 'weekly'", "ng-model" => "schedule.weekly_start" %>
-		<% end %>
-	</div>
-	<div class="footer align-center">
-		<a class="button" ng-click="createSubmit()" ng-class="{ disabled: isCreateDisabled() }">{{action}}</a>
-		<a class="button" ng-click="cancel()">Cancel</a>
-	</div>
-</div></div>
+<%= render partial: "modal_new_schedule" %>
+<%= render partial: "modal_board_options" %>
 
 <div id="actions">
 	<a class="button" ng-click="createSchedule()">Add Schedule</a>
