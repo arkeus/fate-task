@@ -1,6 +1,6 @@
 @import "utils";
 
-$modal-width: $width * 0.3;
+$default-modal-width: $width * 0.3;
 
 div.modal {
 	background: rgba(0, 0, 0, 0.1);
@@ -8,9 +8,9 @@ div.modal {
 	padding: 10px;
 	position: fixed;
 	top: 25px;
-	width: $modal-width;
+	width: $default-modal-width;
 	left: 50%;
-	margin-left: -($modal-width / 2);
+	margin-left: -($default-modal-width / 2);
 	
 	> div {
 		background: #fff;
