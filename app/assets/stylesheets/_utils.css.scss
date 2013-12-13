@@ -32,6 +32,21 @@
 	@include unselectable;
 }
 
+// Make an item clickable
+@mixin clickable {
+	@include unselectable;
+	cursor: pointer;
+	&:visited { color: #b93838; }
+	&:hover { color: #baa938; }
+	&:active { color: #51ba38; }
+	&:focus { outline: none; }
+}
+
+// Helper class for clickable
+.clickable {
+	@include clickable;
+}
+
 // Revert to border box sizing
 @mixin border-box {
   -webkit-box-sizing: border-box;
@@ -92,6 +107,7 @@ $blue-3: #ff009c;
 $blue-4: #ff009c;
 
 $gray-1: #aaa;
+$gray-2: #eee;
 
 // Color helper classes
 .red-1 { color: $red-1; }
