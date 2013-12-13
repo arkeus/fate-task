@@ -2,8 +2,15 @@
 // APPLICATION
 //
 	
-app.run(["$rootScope", function($rootScope) {
-	//$("#schedule-form").submit(function(e) { e.preventDefault(); });
+app.run(["$rootScope", "Board", function($rootScope, Board) {
+	var REFRESH_RATE = 5 * 60 * 1000; // 5 minutes
+	
+	// Reload schedules repeatedly
+	setInterval(function() {
+		$rootScope.$apply(function() {
+			Board.refresh();
+		});
+	}, REFRESH_RATE);
 }]);
 
 //
@@ -14,13 +21,6 @@ app.controller("BoardController", ["$scope", "Schedule", "Board", function($scop
 	$scope.loading = true;
 	$scope.schedules = null;
 	$scope.error = null;
-	
-	Schedule.query().$promise.then(function(schedules) {
-		$scope.schedules = schedules;
-		$scope.loading = false;
-	}, function() {
-		$scope.error = "Could not load schedules";
-	});
 	
 	$scope.createSchedule = function() {
 		Board.createSchedule();
@@ -35,6 +35,25 @@ app.controller("BoardController", ["$scope", "Schedule", "Board", function($scop
 			$scope.schedules.push(schedule_hash);
 		});
 	};
+	
+	$scope.openOptions = function() {
+		Board.openOptions();
+	};
+	
+	$scope.$on("refresh", function() {
+		$scope.loadSchedules();
+	});
+	
+	$scope.loadSchedules = function() {
+		Schedule.query().$promise.then(function(schedules) {
+			$scope.schedules = schedules;
+			$scope.loading = false;
+		}, function() {
+			$scope.error = "Could not load schedules";
+		});
+	};
+	
+	$scope.loadSchedules();
 }]);
 
 app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope, Task, Board) {
@@ -105,6 +124,31 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 	};
 }]);
 
+app.controller("BoardOptionsModalController", ["$scope", "$http", "Board", "BoardOptions", function($scope, $http, Board, BoardOptions) {
+	$scope.board_options = { name: board.name, time_zone: board.time_zone };
+	$scope.state = null;
+	$scope.error = null;
+	
+	$scope.submit = function() {
+		var board = new BoardOptions($scope.board_options);
+		board.$edit(function() {
+			Board.refresh();
+			$scope.cancel();
+		}, function(error) {
+			console.error(error);
+			$scope.error = error['data']['error'];
+		});
+	};
+	
+	$scope.cancel = function() {
+		$scope.state = null;
+	};
+	
+	$scope.$on("open-options", function(message) {
+		$scope.state = "modal";
+	});
+}]);
+
 app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope, Schedule) {
 	$scope.schedule = null;
 	$scope.title = null;
@@ -119,7 +163,6 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 			$scope.cancel();
 		}, function(error) {
 			$scope.error = error['data']['error'];
-			console.error("GOT AN ERROR", error);
 		});
 	};
 	
@@ -184,11 +227,25 @@ app.factory("Task", ["$rootScope", "$resource", function($rootScope, $resource) 
 	});
 }]);
 
+app.factory("BoardOptions", ["$rootScope", "$resource", function($rootScope, $resource) {
+	return $resource("/:board/edit", { board: board.name }, {
+		edit: { method: "PUT" }
+	});
+}]);
+
 app.factory("Board", ["$rootScope", function($rootScope) {
 	var module = {};
 	
 	module.createSchedule = function() {
 		$rootScope.$broadcast("create-schedule");
+	};
+	
+	module.openOptions = function() {
+		$rootScope.$broadcast("open-options");
+	};
+	
+	module.refresh = function() {
+		$rootScope.$broadcast("refresh");
 	};
 	
 	return module;
@@ -198,21 +255,10 @@ app.factory("Board", ["$rootScope", function($rootScope) {
 // DIRECTIVES
 //
 
-app.directive("schedule", [function() {
-	return {
-		restrict: "A",
-		controller: ["$scope", function($scope) {
-			
-		}],
-	};
-}]);
+// none
 
 //
 // FILTERS
 //
 
-app.filter("toHours", function() {
-	return function(time) {
-		return "";
-	};
-});
+// none
