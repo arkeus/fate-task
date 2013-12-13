@@ -21,12 +21,19 @@ class Schedule < ActiveRecord::Base
 	
 	def generate_points
 		points = []
-		time = Time.now.in_time_zone("Pacific Time (US & Canada)")
+		time = Time.now.in_time_zone(board.time_zone)
+		created = created_at || Time.now
+		
 		if schedule_type == "daily"
 			limit = 8
 			time += 1.day until daily_days.include?(time.strftime("%A")) || (limit -= 1) <= 0
 			until points.length >= NUM_DAILY_POINTS do
-				points << { value: TimeUtil::day_number(time), display: time.mday.ordinalize, future: time.future? } if daily_days.include?(time.strftime("%A"))
+				relativity = case
+					when time.future? then "+"
+					when time < created then "-"
+					else nil
+				end
+				points << { value: TimeUtil::day_number(time), display: time.mday.ordinalize, relativity: relativity } if daily_days.include?(time.strftime("%A"))
 				time -= 1.day
 			end
 		elsif schedule_type == "weekly"
@@ -34,7 +41,7 @@ class Schedule < ActiveRecord::Base
 			time -= 1.day while time.wday != weekly_start && (limit -= 1) > 0
 			raise "Could not find week start" unless limit > 0
 			NUM_WEEKLY_POINTS.times do
-				points << { value: TimeUtil::week_number(time), display: "#{time.mday.ordinalize} - #{(time + 6.days).mday.ordinalize}" }
+				points << { value: TimeUtil::day_number(time), display: "#{time.mday.ordinalize} - #{(time + 6.days).mday.ordinalize}" }
 				time -= 7.days
 			end
 		end
