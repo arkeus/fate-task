@@ -1,4 +1,4 @@
-set :application, 'fate-task'
+set :application, 'task'
 set :user, 'arkeus'
 set :repo_url, 'https://github.com/arkeus/fate-task'
 set :branch, 'master'
@@ -6,7 +6,7 @@ set :branch, 'master'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # set :deploy_to, '/var/www/my_app'
-set :deploy_to, "/home/#{user}/#{application}"
+set :deploy_to, "/home/arkeus/task"
 # set :scm, :git
 
 # set :format, :pretty
