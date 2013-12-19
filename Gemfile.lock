@@ -130,6 +130,7 @@ PLATFORMS
 
 DEPENDENCIES
   capistrano (~> 3.0.0)
+  capistrano-bundler
   capistrano-rails (~> 1.1.0)
   font-awesome-rails
   jbuilder (~> 1.2)
