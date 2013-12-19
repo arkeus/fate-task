@@ -16,6 +16,9 @@ gem 'normalize-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
+# JS runtime
+gem 'therubyracer', platforms: :ruby
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
