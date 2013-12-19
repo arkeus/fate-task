@@ -5,10 +5,9 @@ set :stage, :production
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-#role :web, %w{arkeus@fate.io}
-#role :db, %w{arkeus@fate.io}
-#role :app, %w{arkeus@fate.io}
-role :all, ["arkeus@fate.io"]
+role :web, ["arkeus@fate.io"]
+role :db, ["arkeus@fate.io"]
+role :app, ["arkeus@fate.io"]
 
 # Extended Server Syntax
 # ======================

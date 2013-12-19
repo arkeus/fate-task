@@ -38,6 +38,9 @@ GEM
     capistrano-rails (1.1.0)
       capistrano (>= 3.0.0)
       capistrano-bundler (>= 1.0.0)
+    capistrano-rvm (0.1.0)
+      capistrano (~> 3.0)
+      sshkit (~> 1.2.0)
     erubis (2.7.0)
     execjs (2.0.2)
     font-awesome-rails (4.0.3.0)
@@ -132,6 +135,7 @@ DEPENDENCIES
   capistrano (~> 3.0.0)
   capistrano-bundler
   capistrano-rails (~> 1.1.0)
+  capistrano-rvm
   font-awesome-rails
   jbuilder (~> 1.2)
   jquery-rails
