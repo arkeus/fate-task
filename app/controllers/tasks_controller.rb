@@ -19,8 +19,6 @@ class TasksController < ApplicationController
 	end
 	
 	def update
-		puts @task.inspect
-		puts post_params[:task][:name]
 		@task.name = post_params[:task][:name]
 		@task.save!
 		render nothing: true, status: 200
