@@ -3,40 +3,47 @@
 <%= render partial: "notice" %>
 
 <section id="pitch">
-	Fate Task is an easy to use online app allowing you to schedule and keep track of your day to day tasks.
+	Fate Task is an easy to use online app allowing you to schedule and keep track of your day to day tasks. Quickly create schedules that occur on a daily basis, or ones that occur weekly. For daily schedules, choose which days of the week you want; and for weekly schedules you can choose which day the week starts on.
 </section>
 
 <section id="promotion" class="grid">
-	<div class="promotion-column col-4 align-center">
-		<div class="title"><%= fa_icon "cloud", class: "red-2" %><span>Online</span></div>
-		<div class="blurb">Fate Task lives online, so you can access it from any computer, anywhere.</div>
+	<div class="promotion-column col-3 align-center">
+		<div class="icon"><%= fa_icon "cloud" %></div>
+		<div class="title">Online</div>
+		<div class="blurb">Fate Task lives online, so you can access it from any computer, any time. It also stays synced between computers.</div>
 	</div>
-	<div class="promotion-column col-4 align-center">
-		<div class="title"><%= fa_icon "check", class: "green-2" %><span>Easy</span></div>
-		<div class="blurb">Creating and managing tasks are as simple as possible, but no simpler.</div>
+	<div class="promotion-column col-3 align-center">
+		<div class="icon"><%= fa_icon "check" %></div>
+		<div class="title">Simple</div>
+		<div class="blurb">Creating and managing schedules are fast and easy. No need to waste time with obscure interfaces.</div>
 	</div>
-	<div class="promotion-column col-4 align-center">
-		<div class="title"><%= fa_icon "bolt", class: "blue-2" %> <span>Quick</span></div>
-		<div class="blurb">Optimistic design provides an incredibly responsive interface.</div>
+	<div class="promotion-column col-3 align-center">
+		<div class="icon"><%= fa_icon "bolt" %></div>
+		<div class="title">Quick</div>
+		<div class="blurb">Optimistic design provides an incredibly responsive interface. No waiting for page loads or refreshes.</div>
+	</div>
+	<div class="promotion-column col-3 align-center">
+		<div class="icon"><%= fa_icon "bolt" %></div>
+		<div class="title">Open Source</div>
+		<div class="blurb">Fate Task is open source so you are free to deploy it to your own hosts for complete privacy and control.</div>
 	</div>
 </section>
 
 <section id="action" class="grid">
-	<div class="col-2">&nbsp;</div>
+	<div class="col-3">&nbsp;</div>
 	<div class="action-column col-3 align-center">
-		<div class="title"><%= fa_icon "folder-open", class: "gray-1" %><span>Load A Board</span></div>
+		<div class="title">Load A Board</div> 
 		<%= form_tag(load_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Load") %>
 		<% end %>
 	</div>
-	<div class="col-2">&nbsp;</div>
 	<div class="action-column col-3 align-center">
-		<div class="title"><%= fa_icon "plus", class: "gray-1" %><span>Create A Board</span></div>
+		<div class="title">Create A Board</div>
 		<%= form_tag(create_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Create") %>
 		<% end %>
 	</div>
-	<div class="col-2">&nbsp;</div>
+	<div class="col-3">&nbsp;</div>
 </section>

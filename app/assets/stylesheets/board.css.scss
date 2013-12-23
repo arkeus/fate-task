@@ -83,7 +83,7 @@ main {
 	}
 	
 	section#action {
-		margin-top: 20px;
+		margin-top: 12px;
 	}
 	
 	#new-schedule {
@@ -268,43 +268,52 @@ footer {
 }
 
 section#pitch {
-	margin-bottom: 20px;
-	font-size: 19px;
-	text-align: center;
+	margin-bottom: 12px;
+	font-size: 14px;
+	text-align: justify;
 }
 
 section#promotion, section#action {
 	.promotion-column {
-		padding: 0 20px;
+		padding: 0;
+		
+		&:nth-child(1) { padding-right: 20px; }
+		&:nth-child(2) { padding: 0 10px; }
+		&:nth-child(3) { padding: 0 10px; }
+		&:nth-child(4) { padding-left: 20px; }
+	}
+	
+	.icon {
+		.fa {
+			font-size: 48px;
+			color: #ccc;
+			display: none;
+		}
 	}
 		
 	.title {
 		@include clearfix;
 		font-family: "Telex", sans-serif;
 		font-weight: bold;
-		font-size: 18px;
-		
-		.fa {
-			display: block;
-			font-size: 24px;
-			float: right;
-		}
-		
-		span {
-			float: left;
-		}
+		font-size: 14px;
+		margin: 8px 0;
 	}
 	
 	.blurb {
 		width: 100%;
 		text-align: justify;
+		font-size: 12px;
+	}
+	
+	.action-column {
+		padding: 0 10px;
 	}
 	
 	form {
 		margin-top: 8px;
 		
 		input[type="text"] {
-			width: 130px;
+			width: 108px;
 		}
 		
 		input[type="submit"] {
