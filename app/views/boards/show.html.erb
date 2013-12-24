@@ -7,13 +7,13 @@
 
 <div ng-show="loading">Loading</div>
 <div ng-show="!loading && schedules.length == 0" id="no-schedules">
-	You have no schedules. Create one by clicking the button below.
+	You have <strong>no schedules</strong>. Create one by clicking the button below. In addition, your time zone is set to <strong>{{board.time_zone}}</strong>. Click the gears in the upper right to change it.
 </div>
 <table border=0 ng-repeat="schedule in schedules" class="schedule {{schedule.schedule_type}}" ng-controller="ScheduleController">
 	<thead>
 		<tr>
 			<th class="schedule-name">
-				<span class="clickable">{{schedule.name}}</span>
+				<span editable edit-object="schedule" edit-property="name" edit-path="/{{board.name}}/schedules/{{schedule.id}}" id="schedule-{{schedule.id}}">{{schedule.name}}</span>
 				<span class="deletable" ng-click="deleteSchedule(schedule)"><%= fa_icon "times" %></span>
 			</th>
 			<th ng-repeat="point in schedule.points" class="point-header">{{point.display}}</th>
@@ -22,7 +22,7 @@
 	<tbody>
 		<tr ng-repeat="task in schedule.schedule_tasks">
 			<td class="task-name">
-				<span class="clickable" ng-click="editTask($event)">{{task.name}}</span>
+				<span editable edit-object="task" edit-property="name" edit-path="/{{board.name}}/schedules/{{schedule.id}}/tasks/{{task.id}}" id="task-{{task.id}}">{{task.name}}</span>
 				<span class="deletable" ng-click="deleteTask(task)"><%= fa_icon "times" %></span>
 			</td>
 			<td ng-repeat="point in schedule.points" class="task-point" ng-click="markTask()">
@@ -50,4 +50,4 @@
 	<a class="button" ng-click="createSchedule()">Add Schedule</a>
 </div>
 
-<%= javascript_globals(board: @board) %>
+<%= javascript_globals(BOARD: @board) %>

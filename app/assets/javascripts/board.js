@@ -2,11 +2,13 @@
 // APPLICATION
 //
 	
-app.run(["$rootScope", "Board", function($rootScope, Board) {
+app.run(["$rootScope", "$interval", "Board", function($rootScope, $interval, Board) {
 	var REFRESH_RATE = 5 * 60 * 1000; // 5 minutes
 	
+	$rootScope.board = BOARD;
+	
 	// Reload schedules repeatedly
-	setInterval(function() {
+	$interval(function() {
 		$rootScope.$apply(function() {
 			Board.refresh();
 		});
@@ -56,7 +58,7 @@ app.controller("BoardController", ["$scope", "Schedule", "Board", function($scop
 	$scope.loadSchedules();
 }]);
 
-app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope, Task, Board) {
+app.controller("ScheduleController", ["$scope", "$timeout", "Task", "Board", function($scope, $timeout, Task, Board) {
 	$scope.addTask = function(schedule_id) {
 		var task = new Task({
 			schedule_id: schedule_id,
@@ -64,6 +66,9 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 		});
 		task.$save({ schedule_id: schedule_id }).then(function(task) {
 			$scope.schedule.schedule_tasks.push(task);
+			$timeout(function() {
+				$("#task-" + task.id).click();
+			});
 		});
 	};
 	
@@ -71,41 +76,9 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 		$scope.schedule.schedule_tasks.splice($scope.schedule.schedule_tasks.indexOf(task_hash), 1);
 		var task = new Task(task_hash);
 		task.$delete({ schedule_id: task.schedule_id, id: task.id }).then(function() {
-			console.info("SUCCESS");
+			// Success
 		}, function() {
 			$scope.schedule.schedule_tasks.push(task_hash);
-		});
-	};
-	
-	$scope.editTask = function(event) {
-		var self = this;
-		var task = new Task(self.task);
-		var element = $(event.target);
-		var container = element.parent();
-		var editable = $("<input>").attr({ type: "text", value: task.name }).addClass("editable-task");
-		element.hide();
-		container.append(editable).addClass("editing");
-		editable.focus().on("blur", function(event) {
-			editable.prop("disabled", true);
-			container.removeClass("editing");
-			task.name = editable.val();
-			if (task.name == self.task.name) {
-				editable.remove();
-				element.show();
-				return;
-			}
-			task.$update({ schedule_id: task.schedule_id, id: task.id }).then(function() {
-				self.task.name = editable.val();
-				editable.remove();
-				element.show();
-			}, function() {
-				editable.remove();
-				element.show();
-			});
-		}).on("keydown", function(event) {
-			if (event.which == 13) {
-				$(this).blur();
-			}
 		});
 	};
 	
@@ -125,27 +98,32 @@ app.controller("ScheduleController", ["$scope", "Task", "Board", function($scope
 }]);
 
 app.controller("BoardOptionsModalController", ["$scope", "$http", "Board", "BoardOptions", function($scope, $http, Board, BoardOptions) {
-	$scope.board_options = { name: board.name, time_zone: board.time_zone };
 	$scope.state = null;
 	$scope.error = null;
+	$scope.previouslySelected = null;
 	
 	$scope.submit = function() {
-		var board = new BoardOptions($scope.board_options);
+		var board = new BoardOptions($scope.board);
 		board.$edit(function() {
 			Board.refresh();
-			$scope.cancel();
+			$scope.close();
 		}, function(error) {
-			console.error(error);
 			$scope.error = error['data']['error'];
 		});
 	};
 	
 	$scope.cancel = function() {
+		$scope.board.time_zone = $scope.previouslySelected;
+		$scope.close();
+	};
+	
+	$scope.close = function() {
 		$scope.state = null;
 	};
 	
 	$scope.$on("open-options", function(message) {
 		$scope.state = "modal";
+		$scope.previouslySelected = $scope.board.time_zone;
 	});
 }]);
 
@@ -214,21 +192,18 @@ app.controller("ScheduleModalController", ["$scope", "Schedule", function($scope
 //
 
 app.factory("Schedule", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/schedules/:id", { board: board.name }, {
-		update: { method: "PUT" }
-	});
+	return $resource("/:board/schedules/:id", { board: $rootScope.board.name }, {});
 }]);
 
 app.factory("Task", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/schedules/:schedule_id/tasks/:id/:action", { board: board.name }, {
-		update: { method: "PUT" },
+	return $resource("/:board/schedules/:schedule_id/tasks/:id/:action", { board: $rootScope.board.name }, {
 		complete: { method: "PUT", params: { action: "complete" } },
 		uncomplete: { method: "PUT", params: { action: "uncomplete" } }
 	});
 }]);
 
 app.factory("BoardOptions", ["$rootScope", "$resource", function($rootScope, $resource) {
-	return $resource("/:board/edit", { board: board.name }, {
+	return $resource("/:board/edit", { board: $rootScope.board.name }, {
 		edit: { method: "PUT" }
 	});
 }]);
@@ -255,7 +230,63 @@ app.factory("Board", ["$rootScope", function($rootScope) {
 // DIRECTIVES
 //
 
-// none
+app.directive("editable", ["$rootScope", "$http", function($rootScope, $http) {
+	return {
+		restrict: "A",
+		template: "",
+		link: function(scope, element, attrs) {
+			var container = element.parent();
+			var object = scope.editObject;
+			var property = scope.editProperty;
+		
+			element.on("click", function(event) {
+				var oldProperty = object[property];
+				var editable = $("<input>").attr({ type: "text", value: object.name, placeholder: "Name" }).addClass("editable");
+				element.removeClass("error").hide();
+				container.append(editable).addClass("editing");
+				
+				editable.focus().on("blur", function(event) {
+					editable.prop("disabled", true);
+					container.removeClass("editing");
+					var newProperty = editable.val();
+					
+					if (/^\s*$/.test(newProperty) || newProperty == oldProperty) {
+						editable.remove();
+						element.show();
+						return;
+					}
+					
+					var data = {};
+					data[property] = object[property] = newProperty;
+					
+					$http.put(scope.editPath, data).then(function() {
+						editable.remove();
+						element.show();
+					}, function() {
+						object[property] = oldProperty;
+						editable.remove();
+						element.addClass("error").show();
+					});
+				}).on("keydown", function(event) {
+					if (event.which == 13) {
+						$(this).blur();
+					} else if (event.which == 27) {
+						editable.val(oldProperty);
+						$(this).blur();
+					}
+				});
+				
+				console.log(scope.editObject[scope.editProperty]);
+				console.log(scope.editPath);
+			});
+		},
+		scope: {
+			editObject: "=",
+			editProperty: "@",
+			editPath: "@",
+		}
+	};
+}]);
 
 //
 // FILTERS

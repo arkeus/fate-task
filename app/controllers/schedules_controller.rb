@@ -19,7 +19,9 @@ class SchedulesController < ApplicationController
 	end
 	
 	def update
-		# get rid of?
+		@schedule.name = post_params[:schedule][:name]
+		@schedule.save!
+		render nothing: true, status: 200
 	end
 	
 	def destroy

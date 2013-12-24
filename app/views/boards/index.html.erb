@@ -32,14 +32,14 @@
 <section id="action" class="grid">
 	<div class="col-3">&nbsp;</div>
 	<div class="action-column col-3 align-center">
-		<div class="title">Load A Board</div> 
+		<div class="title">Load An Existing Board</div> 
 		<%= form_tag(load_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Load") %>
 		<% end %>
 	</div>
 	<div class="action-column col-3 align-center">
-		<div class="title">Create A Board</div>
+		<div class="title">Create A New Board</div>
 		<%= form_tag(create_board_path, method: :post) do %>
 			<%= text_field_tag(:name, nil, placeholder: "Board Name") %>
 			<%= submit_tag("Create") %>

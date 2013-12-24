@@ -4,7 +4,7 @@
 		<div class="error" ng-show="error != null">{{error}}</div>
 		<%= form_tag "", id: "board-options-form", "ng-submit" => "submit()" do %>
 			<%= label_tag :time_zone, "Time Zone" %>
-			<%= select_tag :time_zone, time_zone_options, class: "row", "ng-model" => "board_options.time_zone" %>
+			<%= select_tag :time_zone, time_zone_options, class: "row", "ng-model" => "board.time_zone" %>
 		<% end %>
 	</div>
 	<div class="footer align-center">

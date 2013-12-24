@@ -98,6 +98,24 @@ a {
 		}
 	}
 }
+	
+input.editable {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	width: 80%;
+	box-shadow: none;
+	color: $blue-2;
+	
+	&:focus {
+		outline: none;
+	}
+	
+	&:disabled {
+		background: none;
+		color: #ccc;
+	}
+}
 
 ::selection { background: #000; color: #fff; }
 ::-moz-selection { background: #000; color: #fff; }

@@ -138,6 +138,10 @@ main {
 				vertical-align: bottom;
 			}
 			
+			input.editable {
+				font-size: 20px;
+			}
+			
 			.point-header {
 				white-space: nowrap;
 				padding: 2px 0;
@@ -156,22 +160,8 @@ main {
 				color: #555;
 			}
 			
-			.editable-task {
-				border: 0;
-				padding: 0;
-				margin: 0;
-				width: 80%;
-				box-shadow: none;
-				color: $blue-2;
-				
-				&:focus {
-					outline: none;
-				}
-				
-				&:disabled {
-					background: none;
-					color: #ccc;
-				}
+			input.editable {
+				// overrides
 			}
 			
 			.task-point {
