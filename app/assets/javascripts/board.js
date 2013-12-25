@@ -8,11 +8,7 @@ app.run(["$rootScope", "$interval", "Board", function($rootScope, $interval, Boa
 	$rootScope.board = BOARD;
 	
 	// Reload schedules repeatedly
-	$interval(function() {
-		$rootScope.$apply(function() {
-			Board.refresh();
-		});
-	}, REFRESH_RATE);
+	$interval(Board.refresh, REFRESH_RATE);
 }]);
 
 //
