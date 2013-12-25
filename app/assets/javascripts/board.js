@@ -32,7 +32,7 @@ app.controller("BoardController", ["$scope", "Schedule", "Board", function($scop
 		$scope.schedules.splice($scope.schedules.indexOf(schedule_hash), 1);
 		var schedule = new Schedule(schedule_hash);
 		schedule.$delete({ id: schedule.id }).then(function() {
-			console.info("SUCCESS");
+			//console.info("SUCCESS");
 		}, function() {
 			$scope.schedules.push(schedule_hash);
 		});
@@ -275,9 +275,6 @@ app.directive("editable", ["$rootScope", "$http", function($rootScope, $http) {
 						$(this).blur();
 					}
 				});
-				
-				console.log(scope.editObject[scope.editProperty]);
-				console.log(scope.editPath);
 			});
 		},
 		scope: {
